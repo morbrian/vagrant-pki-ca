@@ -1,0 +1,41 @@
+#stolen from http://gary-rowe.com/agilestack/2012/10/12/a-gitignore-file-for-intellij-and-eclipse-with-maven/
+
+.vagrant/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+.DS_Store
+log/
+target/
+*.swp
+dependency-reduced-pom.xml
+*.log
+*.out
+*.pid
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IntelliJ specific files/directories
+#
+# wng
+out
+*.ipr
+atlassian-ide-plugin.xml
+
+# Atlassian Clover
+.cloverhistory
+
+#JavaScript Test Results
+test-results.xml
+
+#Precompile output
+.sass_cache
+gidgets_nusp/src/main/webapp/src/css/*.css
+
+# npm/bower
+bower_components
+node_modules
