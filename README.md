@@ -10,14 +10,14 @@ This repository contains the Dockerfile and all other files necessary to create 
 
 Build the container from source, optionally specifying branch build with a hashtag. Note that spork requires SSH authentication, so run from a computer with .ss/id_rsa file set up.
 
-		sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
+        sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
 
 ## Running the Container
 
 The nginx server is configured to listen to port 8443, so in order to connect
 over 443 the port mapping below should be added to the run command.
 
-        	-p 443:8443
+            -p 443:8443
 
 The nginx server expects a list of certificates to exist in a volume and will
 not start until the certificates are provided.
@@ -29,10 +29,10 @@ not start until the certificates are provided.
 
 The volume must be added at to the run time with a special character at the end to prevent SELinux from throwing a permission denied error when the container attempts to read the files.
 
-        	sudo docker run -d -p 443:8443 --name=nginx -v /docker/volumes:/etc/nginx/certs:z --restart always nginx
-        	
-		    sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
-        	sudo docker run -d -p 80:8080 --name=sample nginx
+            sudo docker run -d -p 443:8443 --name=nginx -v /docker/volumes:/etc/nginx/certs:z --restart always nginx
+            
+            sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
+            sudo docker run -d -p 80:8080 --name=sample nginx
 
 ## Certificate Management
 
@@ -73,12 +73,12 @@ Viewing certificates for a specific server configuration:
 
 In order to deploy a locally built container to a remote server you need to save the image as a tar and copy it to the server.
 
-		sudo docker save -o <filename.tar> <image-name>
-		scp <filename.tar> username@remoteserver:
+        sudo docker save -o <filename.tar> <image-name>
+        scp <filename.tar> username@remoteserver:
 
 Then after logging into the remote server you wilsll load the tar into the local docker registry and tag it with the appropriate version
 
-		sudo docker load -i <filename.tar>
-		sudo docker tag <image-name>:latest <image-name>:<version>
+        sudo docker load -i <filename.tar>
+        sudo docker tag <image-name>:latest <image-name>:<version>
 
 
