@@ -1,33 +1,13 @@
-FROM registry-nginxinc.rhcloud.com/nginx/rhel7-nginx:1.9.2
+FROM registry.access.redhat.com/rhscl/nginx-112-rhel7
 
-COPY template.conf /tmp
+USER root
 
-#DEFAULT
-RUN sed s/\$\{SERVER_NAME\}/_/ /tmp/template.conf > /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/opt/rh/rh-nginx112/nginx/nginx.conf
+#COPY custom_CAs.pem /etc/nginx/certs/custom_CAs.pem
 
-#HOST1
-RUN sed s/\$\{SERVER_NAME\}/host1.develop.com/ /tmp/template.conf > /etc/nginx/conf.d/host1.develop.com.conf
-RUN sed -i s/default_server// /etc/nginx/conf.d/host1.develop.com.conf
-RUN sed -i /ssl_client_certificate/d /etc/nginx/conf.d/host1.develop.com.conf
-RUN sed -i /ssl_verify_client/d /etc/nginx/conf.d/host1.develop.com.conf
-RUN sed -i /ssl_verify_depth/d /etc/nginx/conf.d/host1.develop.com.conf
-
-#HOST2
-RUN sed s/\$\{SERVER_NAME\}/host2.develop.com/ /tmp/template.conf > /etc/nginx/conf.d/host2.develop.com.conf
-RUN sed -i s/default_server// /etc/nginx/conf.d/host2.develop.com.conf
-RUN sed -i /ssl_client_certificate/d /etc/nginx/conf.d/host2.develop.com.conf
-RUN sed -i /ssl_verify_client/d /etc/nginx/conf.d/host2.develop.com.conf
-RUN sed -i /ssl_verify_depth/d /etc/nginx/conf.d/host2.develop.com.conf
-
-#HOST2
-RUN sed s/\$\{SERVER_NAME\}/host3.develop.com/ /tmp/template.conf > /etc/nginx/conf.d/host3.develop.com.conf
-RUN sed -i s/default_server// /etc/nginx/conf.d/host3.develop.com.conf
-
-
-VOLUME ["/etc/nginx/certs", "/var/log/nginx"]
+VOLUME ["/etc/nginx/certs", "/opt/app-root/etc/nginx.d"]
 
 EXPOSE 8443
 
-
-
+CMD /opt/rh/rh-nginx112/root/usr/sbin/nginx -g "daemon off;"
 
