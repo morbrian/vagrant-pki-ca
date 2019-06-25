@@ -1,38 +1,6 @@
-# Nginx Proxy Server with Docker
+# Simple local CA for development use
 
-This repository contains the Dockerfile and all other files necessary to create the container for the Nginx proxy server.
-
-## Table of Contents
-
-* [Running the Container] (#running-the-container)
-
-## Building the Container
-
-Build the container from source, optionally specifying branch build with a hashtag. Note that spork requires SSH authentication, so run from a computer with .ss/id_rsa file set up.
-
-        sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
-
-## Running the Container
-
-The nginx server is configured to listen to port 8443, so in order to connect
-over 443 the port mapping below should be added to the run command.
-
-            -p 443:8443
-
-The nginx server expects a list of certificates to exist in a volume and will
-not start until the certificates are provided.
-
-+ cert.crt
-+ cert.key
-+ trusted-ca-signers.pem
-+ ha-proxy-cert.cer
-
-The volume must be added at to the run time with a special character at the end to prevent SELinux from throwing a permission denied error when the container attempts to read the files.
-
-            sudo docker run -d -p 443:8443 --name=nginx -v /docker/volumes:/etc/nginx/certs:z --restart always nginx
-            
-            sudo docker build -t nginx git@github.com/morbrian/vagrant-nginx.git
-            sudo docker run -d -p 80:8080 --name=sample nginx
+This repository provides a simple OpenSSL CA and helper scripts to help with local development.
 
 ## Certificate Management
 
