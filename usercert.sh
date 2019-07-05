@@ -29,15 +29,18 @@ USER_NAME=$1
 SUBJECT_CN=${USER_NAME}.${EDIPI}
 SUBJECT_EMAIL=$(echo "${USER_NAME}" | tr '[:upper:]' '[:lower:]')@example.fqdn
 CLEAN=$2
+ARCHIVE=/root/certgen
 USER_CSR=/etc/pki/CA/csr/${USER_NAME}.csr
 USER_EMAIL_CSR=/etc/pki/CA/csr/${USER_NAME}.email.csr
 USER_KEY=/etc/pki/CA/private/${USER_NAME}.key
 USER_EMAIL_KEY=/etc/pki/CA/private/${USER_NAME}.email.key
 USER_CRT=/etc/pki/CA/certs/${USER_NAME}.crt
 USER_EMAIL_CRT=/etc/pki/CA/certs/${USER_NAME}.email.crt
-USER_TGZ=/root/certgen/${USER_NAME}.tgz
+USER_TGZ=${ARCHIVE}/${USER_NAME}.tgz
 SUBJECT_DN="/CN=${SUBJECT_CN}/OU=CONTRACTOR/OU=PKI/OU=DoD/ST=California/O=sandbox/C=US/"
 SUBJECT_DN_WITH_EMAIL="/CN=EMAIL.${SUBJECT_CN}/emailAddress=${SUBJECT_EMAIL}/OU=CONTRACTOR/OU=PKI/OU=DoD/ST=California/O=sandbox/C=US/"
+
+mkdir -p ${ARCHIVE}
 
 if [ -f ${USER_CSR} ]; then
     echo "CSR already exists: ${USER_CSR}"

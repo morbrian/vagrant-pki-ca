@@ -6,6 +6,18 @@ This repository provides a simple OpenSSL CA and helper scripts to help with loc
 
 This sandbox VM includes a local Certificate Authority for managing self signed certificates used for development.
 
+## How to Produce Server Cert With Script
+
+How to create server cert (output wil be under `/root/certgen` folder on VM
+
+`sudo bash /vagrant/servercert.sh proxy.example.com`
+
+How to create client cert (produces two certs one with email, one without, both under `/root/certgen` folder on VM)
+
+`sudo bash /vagrant/usercert.sh ROMANOV.NATASHA.U`
+
+## Base Commands Similar to Scripts (if needed)
+
 Generate host1 private key
 
             openssl genrsa -out /etc/pki/CA/private/host1.develop.com.key 4096

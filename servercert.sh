@@ -12,11 +12,14 @@ fi
 
 SERVER_NAME=$1
 CLEAN=$2
+ARCHIVE=/root/certgen
 SERVER_CSR=/etc/pki/CA/csr/${SERVER_NAME}.csr
 SERVER_KEY=/etc/pki/CA/private/${SERVER_NAME}.key
 SERVER_CRT=/etc/pki/CA/certs/${SERVER_NAME}.crt
-SERVER_TGZ=/root/certgen/${SERVER_NAME}.tgz
+SERVER_TGZ=${ARCHIVE}/${SERVER_NAME}.tgz
 SUBJECT="/OU=CONTRACTOR/OU=PKI/OU=DoD/ST=California/O=sandbox/C=US/CN=${SERVER_NAME}"
+
+mkdir -p ${ARCHIVE}
 
 if [ -f ${SERVER_CSR} ]; then
     echo "CSR already exists: ${SERVER_CSR}"
