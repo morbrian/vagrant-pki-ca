@@ -35,7 +35,9 @@ USER_EMAIL_CSR=/etc/pki/CA/csr/${USER_NAME}.email.csr
 USER_KEY=/etc/pki/CA/private/${USER_NAME}.key
 USER_EMAIL_KEY=/etc/pki/CA/private/${USER_NAME}.email.key
 USER_CRT=/etc/pki/CA/certs/${USER_NAME}.crt
+USER_PFX=/etc/pki/CA/certs/${USER_NAME}.pfx
 USER_EMAIL_CRT=/etc/pki/CA/certs/${USER_NAME}.email.crt
+USER_EMAIL_PFX=/etc/pki/CA/certs/${USER_NAME}.email.pfx
 USER_TGZ=${ARCHIVE}/${USER_NAME}.tgz
 SUBJECT_DN="/CN=${SUBJECT_CN}/OU=CONTRACTOR/OU=PKI/OU=DoD/ST=California/O=sandbox/C=US/"
 SUBJECT_DN_WITH_EMAIL="/CN=EMAIL.${SUBJECT_CN}/emailAddress=${SUBJECT_EMAIL}/OU=CONTRACTOR/OU=PKI/OU=DoD/ST=California/O=sandbox/C=US/"
@@ -81,6 +83,10 @@ openssl req -sha256 -new -key ${USER_EMAIL_KEY} -out ${USER_EMAIL_CSR} -subj "${
 echo "sign the request with CA"
 openssl ca -batch -keyfile ${CA_KEY} -cert ${CA_CRT} -extensions usr_cert -notext -md sha256 -in ${USER_CSR} -out ${USER_CRT}
 openssl ca -batch -keyfile ${CA_KEY} -cert ${CA_CRT} -extensions usr_cert -notext -md sha256 -in ${USER_EMAIL_CSR} -out ${USER_EMAIL_CRT} -extensions usr_cert
+
+echo "product pfx for import to browser"
+openssl pkcs12 -export -in ${USER_CRT} -inkey ${USER_KEY} -certfile ${CA_CRT} -out ${USER_PFX} -passout pass:password
+openssl pkcs12 -export -in ${USER_EMAIL_CRT} -inkey ${USER_EMAIL_KEY} -certfile ${CA_CRT} -out ${USER_EMAIL_PFX} -passout pass:password
 
 echo "Archive key and cert to ${USER_TGZ}"
 tar --transform 's/.*\///g' -cvzf ${USER_TGZ} ${USER_KEY} ${USER_CRT} ${USER_EMAIL_KEY} ${USER_EMAIL_CRT}
