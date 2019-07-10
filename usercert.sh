@@ -89,7 +89,7 @@ openssl pkcs12 -export -in ${USER_CRT} -inkey ${USER_KEY} -certfile ${CA_CRT} -o
 openssl pkcs12 -export -in ${USER_EMAIL_CRT} -inkey ${USER_EMAIL_KEY} -certfile ${CA_CRT} -out ${USER_EMAIL_PFX} -passout pass:password
 
 echo "Archive key and cert to ${USER_TGZ}"
-tar --transform 's/.*\///g' -cvzf ${USER_TGZ} ${USER_KEY} ${USER_CRT} ${USER_EMAIL_KEY} ${USER_EMAIL_CRT}
+tar --transform 's/.*\///g' -cvzf ${USER_TGZ} ${USER_KEY} ${USER_CRT} ${USER_EMAIL_KEY} ${USER_EMAIL_CRT} ${USER_PFX} ${USER_EMAIL_PFX} ${CA_CRT}
 
 
 

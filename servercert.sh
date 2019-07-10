@@ -59,4 +59,4 @@ echo "sign the request with CA"
 openssl ca -batch -keyfile ${CA_KEY} -cert ${CA_CRT} -extensions usr_cert -notext -md sha256 -in ${SERVER_CSR} -out ${SERVER_CRT}
 
 echo "Archive key and cert to ${SERVER_TGZ}"
-tar --transform 's/.*\///g' -cvzf ${SERVER_TGZ} ${SERVER_KEY} ${SERVER_CRT}
+tar --transform 's/.*\///g' -cvzf ${SERVER_TGZ} ${SERVER_KEY} ${SERVER_CRT} ${CA_CRT}
